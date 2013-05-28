@@ -25,7 +25,7 @@ class apache::params {
     fail("Class['apache::params']: Unparsable \$::operatingsystemrelease: ${::operatingsystemrelease}")
   }
 
-  if $::osfamily == 'RedHat' or $::operatingsystem == 'amazon' {
+  if $::osfamily == 'RedHat' or $::operatingsystem == 'amazon' or $::osfamily == 'Fedora' {
     $user                 = 'apache'
     $group                = 'apache'
     $apache_name          = 'httpd'
@@ -45,6 +45,7 @@ class apache::params {
     $ssl_certs_dir        = $distrelease ? {
       '5' => '/etc/pki/tls/certs',
       '6' => '/etc/ssl/certs',
+      '17' => '/etc/pki/tls/certs',
     }
     $passenger_root       = '/usr/share/rubygems/gems/passenger-3.0.17'
     $passenger_ruby       = '/usr/bin/ruby'
@@ -62,6 +63,7 @@ class apache::params {
     $mod_packages['php5'] = $distrelease ? {
       '5' => 'php53',
       '6' => 'php',
+      '17' => 'php',
     }
     $mod_libs             = {
       'php5' => 'libphp5.so',
